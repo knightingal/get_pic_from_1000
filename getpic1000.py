@@ -9,8 +9,6 @@ def isEnChar(char):
         return False
 
 def getpicfrom1000(webpageurl):
-#webpageurl = "http://www.1000rt.com/News/20121109/101513.htm"
-    #xmlString = openXmlFile("/home/knightingal/new470455.htm")
     webpagefd = urllib2.urlopen(webpageurl)
     xmlString = webpagefd.read()
     
@@ -21,12 +19,8 @@ def getpicfrom1000(webpageurl):
         print "title = %s" % node.elenString
         beginpos = node.elenString.find('>')
         beginpos += 1
-        #while isEnChar(node.elenString[beginpos]) == False:
-        #    beginpos += 1
         endpos = node.elenString.find('[', beginpos)
         endpos -= 1
-        #while isEnChar(node.elenString[endpos]) == True:
-        #    endpos += 1
         namestring = node.elenString[beginpos : endpos + 1]
         dirstring = namestring.decode("gbk")
         print dirstring
@@ -38,7 +32,6 @@ def getpicfrom1000(webpageurl):
 
     tableList = getNodeByName(newString, "table")
     for table in tableList:
-        #print table.attrString
         if table.attrMap['cellspacing'] == '2' and table.attrMap['cellpadding'] == '1':
             trList = getNodeByName(table.elenString, 'td')
             tr = trList[3]
@@ -50,17 +43,14 @@ def getpicfrom1000(webpageurl):
                 nexturl = ""
                         
                     
-                #print tr.elenString
     
 
     nodeList = getNodeByName(newString, "p")
-    #http://531.1000yishu.com/201305/029/1.jpg
 
 
 
     for node in nodeList:
         imgNodeList = getNodeByName(node.elenString, 'img')
-    #print node.elenString
         for imgNode in imgNodeList:
             print imgNode.attrMap['src']
             request=urllib2.Request(imgNode.attrMap['src'])
@@ -86,5 +76,4 @@ def getpicfrom1000(webpageurl):
         
         
 import sys, os
-#weburl = ""
 getpicfrom1000(sys.argv[1])
