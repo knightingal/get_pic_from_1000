@@ -1,14 +1,12 @@
 from xmlParser import *
 import urllib2
 import os
-
+rootDirString = '/home/knightingal/Downloads/.mix/1000/'
 def isEnChar(char):
     if (char >= 'A' and char <= 'Z') or (char >= 'a' and char <= 'z'):
         return True
     else:
         return False
-
-url1000 = ""
 
 def getpicfrom1000(webpageurl):
 #webpageurl = "http://www.1000rt.com/News/20121109/101513.htm"
@@ -87,6 +85,6 @@ def getpicfrom1000(webpageurl):
         
         
         
-
-weburl = ""
-getpicfrom1000(weburl)
+import sys, os
+#weburl = ""
+getpicfrom1000(sys.argv[1])
