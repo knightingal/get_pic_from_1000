@@ -1,6 +1,8 @@
-from xmlParser import *
+
+from xmlParser1000 import *
 import urllib2
 import os
+
 rootDirString = '/home/knightingal/Downloads/.mix/1000/'
 def isEnChar(char):
     if (char >= 'A' and char <= 'Z') or (char >= 'a' and char <= 'z'):
@@ -20,14 +22,16 @@ def getpicfrom1000(webpageurl):
         beginpos = node.elenString.find('>')
         beginpos += 1
         endpos = node.elenString.find('[', beginpos)
+        if endpos < 0:
+            endpos = node.elenString.find('-', beginpos)
         endpos -= 1
         namestring = node.elenString[beginpos : endpos + 1]
         dirstring = namestring.decode("gbk")
         print dirstring
         try:
-            os.mkdir('/home/knightingal/Downloads/.mix/1000/' +dirstring)
+            os.mkdir(rootDirString +dirstring)
         except OSError:
-            print '/home/knightingal/Downloads/.mix/1000/' + dirstring + "exists"
+            print rootDirString + dirstring + "exists"
             
 
     tableList = getNodeByName(newString, "table")
@@ -38,13 +42,9 @@ def getpicfrom1000(webpageurl):
             if tr.elenString.find(namestring) > 0:
                 hrefList = getNodeByName(tr.elenString, 'a')
                 for href in hrefList:
-                    nexturl = url1000 + href.attrMap['href']
+                    nexturl = "http://www.1000rt.com/" + href.attrMap['href']
             else:
                 nexturl = ""
-                        
-                    
-    
-
     nodeList = getNodeByName(newString, "p")
 
 
@@ -75,5 +75,6 @@ def getpicfrom1000(webpageurl):
         
         
         
-import sys, os
+
+import sys, os   
 getpicfrom1000(sys.argv[1])
