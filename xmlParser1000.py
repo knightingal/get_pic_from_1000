@@ -49,40 +49,6 @@ def getNodeByName(xmlString, nodeName):
         
             
         
-"""
-        tailPos = xmlString.find(searchTail, beginPos)
-        if tailPos < 0:
-            searchTail = '/>'
-            tailPos = xmlString.find(searchTail, beginPos)
-        
-        if nextBeginPos >= 0 and tailPos > nextBeginPos:
-            print "error: node in %d not closed" % beginPos
-            
-                
-        elif tailPos < 0:
-            print "error of get tailPos after %d of %s" % (beginPos, nodeName)
-            
-        else:
-            nodeString = xmlString[beginPos : tailPos + len(searchTail)]
-            node.nodeString = nodeString
-            nodeList.append(node)
-        beginPos = nextBeginPos
-        
-        #attrString = xmlString[beginPos + len(searchBeg) : tailPos]
-        #print attrString"""
-        
-"""searchTail = '>'
-        if bFindSub == True and xmlString[tailPos -1] != '/':
-             
-            searchTail = '</' + nodeName + '>'
-            tailPos = xmlString.find(searchTail, beginPos)
-            if tailPos < 0:
-                print "error of get tailPos after %d of %s" % (beginPos, nodeName)
-                break"""
-              
-        
-        
-        #print nodeString
         
     
 
