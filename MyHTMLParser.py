@@ -1,12 +1,15 @@
 from HTMLParser import HTMLParser
 from htmlentitydefs import name2codepoint
+import sys
+
+
 
 class MyHTMLParser(HTMLParser):
     def handle_starttag(self, tag, attrs):
         print "Start tag:", tag
         for attr in attrs:
             print "    attr:", attr
-	
+
     def handle_endtag(self, tag):
         print "End tag:", tag
 
@@ -37,7 +40,7 @@ parser = MyHTMLParser()
 
 
 
-import sys, os
+
 file_path = sys.argv[1]
 
 fp = open(file_path, 'r')
