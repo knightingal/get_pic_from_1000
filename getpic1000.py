@@ -61,20 +61,31 @@ def getpicfrom1000(webpageurl):
             request.add_header("Accept-Encoding", "gzip,deflate,sdch")
             request.add_header("Accept-Language", "zh-CN,zh;q=0.8")
             request.add_header("Accept-Charset", "GBK,utf-8;q=0.7,*;q=0.3")
+            thread = MyThread(request,  dirstring, imgNode.attrMap['src'].split('/'))
+            thread.start()
             
-            picfd = urllib2.urlopen(request)
-            picstring = picfd.read()
-            picfd.close()
-            stringlist = imgNode.attrMap['src'].split('/')
-            picfd = open('/home/knightingal/Downloads/.mix/1000/' + dirstring + '/' + stringlist[-1], 'w')
-            picfd.write(picstring)
-            picfd.close()
+            
             
     if nexturl != "":
         getpicfrom1000(nexturl)
         
-        
-        
+from threading import Thread
 
-import sys, os   
+class MyThread(Thread):
+    def __init__(self, request, dirstring, stringlist):
+        Thread.__init__(self)
+        self.request = request
+        self.dirstring = dirstring
+        self.stringlist = stringlist
+    
+    def run(self):
+        picfd = urllib2.urlopen(self.request)
+        picstring = picfd.read()
+        picfd.close()
+        picfd = open('/home/knightingal/Downloads/.mix/1000/' + self.dirstring + '/' + self.stringlist[-1], 'w')
+        picfd.write(picstring)
+        picfd.close()
+        print self.stringlist[-1] + " done"
+
+import sys
 getpicfrom1000(sys.argv[1])
