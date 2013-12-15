@@ -1,4 +1,6 @@
 from HTMLParser import HTMLParser
+#from sgmllib import SGMLParser
+import sgmllib
 from htmlentitydefs import name2codepoint
 import sys
 
@@ -21,7 +23,7 @@ class MyHTMLParser(HTMLParser):
     
     
     def handle_starttag(self, tag, attrs):
-        #print "Start tag:", tag
+#        print "Start tag:", tag
         for attr in attrs:
             #print "    attr:", attr
             pass
@@ -40,15 +42,17 @@ class MyHTMLParser(HTMLParser):
             
 
     def handle_endtag(self, tag):
-        #print "End tag:", tag
+#        print "End tag:", tag
         if is_tag_not_close(tag) == False:
             if tag != self.curr_block.name:
                 print self.curr_block.name + "not close"
             self.curr_block = self.curr_block.parent_block
 
     def handle_data(self, data):
-        #print "Data:", data
+#        print "Data:", data
         pass
+        
+    
         
     def handle_comment(self, data):
         #print "Comment: ",data
@@ -82,8 +86,10 @@ file_path = sys.argv[1]
 fp = open(file_path, 'r')
 html_string = fp.read()
 fp.close()
-
-parser.feed(html_string)
+#html_string = "<div>fjaldjf</div>"
+dirstring = html_string.decode("gbk")
+#print dirstring
+parser.feed(dirstring)
 
 block = parser.root_block
 print block
