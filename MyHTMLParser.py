@@ -1,6 +1,5 @@
 from HTMLParser import HTMLParser
-#from sgmllib import SGMLParser
-import sgmllib
+
 from htmlentitydefs import name2codepoint
 import sys
 
@@ -14,6 +13,10 @@ class Block(object):
         self.name = ""
         self.child_blocks = []
         self.parent_block = None
+        self.attrs = []
+        self.data = ""
+        
+    
 
 class MyHTMLParser(HTMLParser):
     def __init__(self):
@@ -31,15 +34,18 @@ class MyHTMLParser(HTMLParser):
             if self.root_block == None:
                 self.root_block = Block()
                 self.root_block.name = tag
+                self.root_block.attrs = attrs
                 self.curr_block = self.root_block
             else:
                 tmp_block = Block()
                 tmp_block.name = tag
+                tmp_block.attrs = attrs
                 tmp_block.parent_block = self.curr_block
                 self.curr_block.child_blocks.append(tmp_block)
                 self.curr_block = tmp_block
-            
-            
+        if tag == "img" and self.curr_block.name == "a" and self.curr_block.parent_block.name == "td":
+            print self.curr_block.attrs[1][1]
+            print self.curr_block.attrs[0][1]
 
     def handle_endtag(self, tag):
 #        print "End tag:", tag
@@ -50,7 +56,11 @@ class MyHTMLParser(HTMLParser):
 
     def handle_data(self, data):
 #        print "Data:", data
-        pass
+        
+        
+        if self.curr_block != None and self.curr_block.name == 'a':
+            self.curr_block.data = data
+            #print 'a tag data = ' + data
         
     
         
