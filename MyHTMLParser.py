@@ -88,12 +88,14 @@ class MyHTMLParser(HTMLParser):
 parser = MyHTMLParser()
 
 
-
+import urllib2
 
 
 file_path = sys.argv[1]
-
-fp = open(file_path, 'r')
+if file_path.find("http://") == -1:
+    fp = open(file_path, 'r')
+else:
+    fp = urllib2.urlopen(file_path)
 html_string = fp.read()
 fp.close()
 #html_string = "<div>fjaldjf</div>"
