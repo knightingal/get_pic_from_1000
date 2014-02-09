@@ -1,4 +1,4 @@
-
+import sys
 from xmlParser1000 import *
 import urllib2
 import os
@@ -37,24 +37,22 @@ def getpicfrom1000(webpageurl):
             print rootDirString + dirstring + "exists"
             
 
-    tableList = getNodeByName(new_string, "table")
-    for table in tableList:
+    table_list = getNodeByName(new_string, "table")
+    for table in table_list:
         if table.attrMap['cellspacing'] == '2' and table.attrMap['cellpadding'] == '1':
-            trList = getNodeByName(table.elenString, 'td')
-            tr = trList[3]
+            tr_list = getNodeByName(table.elenString, 'td')
+            tr = tr_list[3]
             if tr.elenString.find(namestring) > 0:
-                hrefList = getNodeByName(tr.elenString, 'a')
-                for href in hrefList:
+                herf_list = getNodeByName(tr.elenString, 'a')
+                for href in herf_list:
                     nexturl = "http://www.1000rt.com/" + href.attrMap['href']
             else:
                 nexturl = ""
-    nodeList = getNodeByName(new_string, "p")
+    node_list = getNodeByName(new_string, "p")
 
-
-
-    for node in nodeList:
-        imgNodeList = getNodeByName(node.elenString, 'img')
-        for imgNode in imgNodeList:
+    for node in node_list:
+        img_node_list = getNodeByName(node.elenString, 'img')
+        for imgNode in img_node_list:
             print imgNode.attrMap['src']
             request=urllib2.Request(imgNode.attrMap['src'])
             request.add_header("Referer", webpageurl)       
@@ -90,5 +88,12 @@ class MyThread(Thread):
         picfd.close()
         print self.stringlist[-1] + " done"
 
-import sys
-getpicfrom1000(sys.argv[1])
+if __name__ == "__main__":
+    web_url_address = ""
+    if len(sys.argv) != 2:
+        print "please input web url address..."
+        web_url_address = raw_input()
+    else:
+        web_url_address = sys.argv[1]
+
+getpicfrom1000(web_url_address)
