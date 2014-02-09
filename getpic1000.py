@@ -3,24 +3,24 @@ from xmlParser1000 import *
 import urllib2
 import os
 
-
-
-
 rootDirString = '/home/knightingal/Downloads/.mix/1000/'
+
+
 def isEnChar(char):
     if (char >= 'A' and char <= 'Z') or (char >= 'a' and char <= 'z'):
         return True
     else:
         return False
 
+
 def getpicfrom1000(webpageurl):
     webpagefd = urllib2.urlopen(webpageurl)
-    xmlString = webpagefd.read()
+    xml_string = webpagefd.read()
     
-    newString = formatBrack(xmlString)
+    new_string = formatBrack(xml_string)
     
-    titleNodeList = getNodeByName(newString, "title")
-    for node in titleNodeList:
+    title_node_list = getNodeByName(new_string, "title")
+    for node in title_node_list:
         print "title = %s" % node.elenString
         beginpos = node.elenString.find('>')
         beginpos += 1
@@ -32,12 +32,12 @@ def getpicfrom1000(webpageurl):
         dirstring = namestring.decode("gbk")
         print dirstring
         try:
-            os.mkdir(rootDirString +dirstring)
+            os.mkdir(rootDirString + dirstring)
         except OSError:
             print rootDirString + dirstring + "exists"
             
 
-    tableList = getNodeByName(newString, "table")
+    tableList = getNodeByName(new_string, "table")
     for table in tableList:
         if table.attrMap['cellspacing'] == '2' and table.attrMap['cellpadding'] == '1':
             trList = getNodeByName(table.elenString, 'td')
@@ -48,7 +48,7 @@ def getpicfrom1000(webpageurl):
                     nexturl = "http://www.1000rt.com/" + href.attrMap['href']
             else:
                 nexturl = ""
-    nodeList = getNodeByName(newString, "p")
+    nodeList = getNodeByName(new_string, "p")
 
 
 
@@ -58,7 +58,9 @@ def getpicfrom1000(webpageurl):
             print imgNode.attrMap['src']
             request=urllib2.Request(imgNode.attrMap['src'])
             request.add_header("Referer", webpageurl)       
-            request.add_header("User-Agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.63 Safari/537.31")
+            request.add_header("User-Agent",
+                               "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.31 "
+                               "(KHTML, like Gecko) Chrome/26.0.1410.63 Safari/537.31")
             request.add_header("Connection", "keep-alive")
             request.add_header("Accept", "*/*")
             request.add_header("Accept-Encoding", "gzip,deflate,sdch")
@@ -66,13 +68,11 @@ def getpicfrom1000(webpageurl):
             request.add_header("Accept-Charset", "GBK,utf-8;q=0.7,*;q=0.3")
             thread = MyThread(request,  dirstring, imgNode.attrMap['src'].split('/'))
             thread.start()
-            
-            
-            
     if nexturl != "":
         getpicfrom1000(nexturl)
         
 from threading import Thread
+
 
 class MyThread(Thread):
     def __init__(self, request, dirstring, stringlist):
