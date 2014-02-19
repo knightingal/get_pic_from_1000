@@ -5,7 +5,6 @@ import os
 
 rootDirString = '/home/knightingal/Downloads/.mix/1000/'
 
-
 def isEnChar(char):
     if (char >= 'A' and char <= 'Z') or (char >= 'a' and char <= 'z'):
         return True
