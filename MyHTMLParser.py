@@ -56,8 +56,6 @@ class MyHTMLParser(HTMLParser):
 
     def handle_data(self, data):
 #        print "Data:", data
-        
-        
         if self.curr_block != None and self.curr_block.name == 'a':
             self.curr_block.data = data
             #print 'a tag data = ' + data
