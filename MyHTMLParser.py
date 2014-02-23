@@ -81,14 +81,10 @@ class MyHTMLParser(HTMLParser):
     def handle_decl(self, data):
         #print "Decl:", data
         pass
-
-
+    
 parser = MyHTMLParser()
 
 import urllib2
-
-
-
 
 file_path = sys.argv[1]
 if file_path.find("http://") == -1:
