@@ -85,8 +85,9 @@ class MyHTMLParser(HTMLParser):
 
 parser = MyHTMLParser()
 
-
 import urllib2
+
+
 
 
 file_path = sys.argv[1]
