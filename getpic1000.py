@@ -29,6 +29,7 @@ def getpicfrom1000(webpageurl):
         endpos -= 1
         namestring = node.elenString[beginpos : endpos + 1]
         dirstring = namestring.decode("gbk")
+        dirstring = dirstring[:-1]
         print dirstring
         try:
             os.mkdir(rootDirString + dirstring)
@@ -82,7 +83,7 @@ class MyThread(Thread):
         picfd = urllib2.urlopen(self.request)
         picstring = picfd.read()
         picfd.close()
-        picfd = open('/home/knightingal/Downloads/.mix/1000/' + self.dirstring + '/' + self.stringlist[-1], 'w')
+        picfd = open(rootDirString + self.dirstring + '/' + self.stringlist[-1], 'w')
         picfd.write(picstring)
         picfd.close()
         print self.stringlist[-1] + " done"
