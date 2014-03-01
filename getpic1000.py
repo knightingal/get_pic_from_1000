@@ -11,11 +11,9 @@ def isEnChar(char):
     else:
         return False
 
-
 def getpicfrom1000(webpageurl):
     webpagefd = urllib2.urlopen(webpageurl)
     xml_string = webpagefd.read()
-    
     new_string = formatBrack(xml_string)
     
     title_node_list = getNodeByName(new_string, "title")
