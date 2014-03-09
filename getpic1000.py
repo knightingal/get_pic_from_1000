@@ -95,3 +95,6 @@ if __name__ == "__main__":
         web_url_address = sys.argv[1]
 
 getpicfrom1000(web_url_address)
+
+
+
