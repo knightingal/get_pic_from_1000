@@ -3,7 +3,7 @@ from xmlParser1000 import *
 import urllib2
 import os
 
-rootDirString = '/home/knightingal/Downloads/.mix/1000/'
+rootDirString = 'D:/testdir/testsubdir/from1000/'
 
 def isEnChar(char):
     if (char >= 'A' and char <= 'Z') or (char >= 'a' and char <= 'z'):
@@ -29,6 +29,7 @@ def getpicfrom1000(webpageurl):
         dirstring = namestring.decode("gbk")
         dirstring = dirstring[:-1]
         print dirstring
+        dirstring = "Virginia"
         try:
             os.mkdir(rootDirString + dirstring)
         except OSError:
@@ -62,8 +63,16 @@ def getpicfrom1000(webpageurl):
             request.add_header("Accept-Encoding", "gzip,deflate,sdch")
             request.add_header("Accept-Language", "zh-CN,zh;q=0.8")
             request.add_header("Accept-Charset", "GBK,utf-8;q=0.7,*;q=0.3")
-            thread = MyThread(request,  dirstring, imgNode.attrMap['src'].split('/'))
-            thread.start()
+            #thread = MyThread(request,  dirstring, imgNode.attrMap['src'].split('/'))
+            #thread.start()
+            picfd = urllib2.urlopen(request)
+            picstring = picfd.read()
+            #picfd.close()
+            picfd = open(rootDirString + dirstring + '/' + imgNode.attrMap['src'].split('/')[-1], 'w')
+            picfd.write(picstring)
+            picfd.close()
+            print imgNode.attrMap['src'].split('/')[-1] + " done"
+
     if nexturl != "":
         getpicfrom1000(nexturl)
         
